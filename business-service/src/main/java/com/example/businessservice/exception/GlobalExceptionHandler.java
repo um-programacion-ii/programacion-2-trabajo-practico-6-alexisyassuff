@@ -12,7 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Global exception handler for the business service.
+ * Manejador global de excepciones para el servicio de negocio.
+ * Proporciona respuestas HTTP consistentes para todas las excepciones de la aplicación.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -20,15 +21,15 @@ public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
-     * Handles DataServiceException and its subclasses.
+     * Maneja DataServiceException y sus subclases.
      *
-     * @param ex the exception
-     * @param request the web request
-     * @return the response entity
+     * @param ex la excepción
+     * @param request la petición web
+     * @return ResponseEntity con el cuerpo de error formateado
      */
     @ExceptionHandler(DataServiceException.class)
     public ResponseEntity<Object> handleDataServiceException(DataServiceException ex, WebRequest request) {
-        log.error("Data service exception: {}", ex.getMessage(), ex);
+        log.error("Excepción del servicio de datos: {}", ex.getMessage(), ex);
         
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now().toString());
@@ -41,15 +42,15 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles ResourceNotFoundException.
+     * Maneja ResourceNotFoundException.
      *
-     * @param ex the exception
-     * @param request the web request
-     * @return the response entity
+     * @param ex la excepción
+     * @param request la petición web
+     * @return ResponseEntity con el cuerpo de error formateado
      */
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-        log.error("Resource not found: {}", ex.getMessage(), ex);
+        log.error("Recurso no encontrado: {}", ex.getMessage(), ex);
         
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now().toString());
@@ -62,15 +63,15 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles BadRequestException.
+     * Maneja BadRequestException.
      *
-     * @param ex the exception
-     * @param request the web request
-     * @return the response entity
+     * @param ex la excepción
+     * @param request la petición web
+     * @return ResponseEntity con el cuerpo de error formateado
      */
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Object> handleBadRequestException(BadRequestException ex, WebRequest request) {
-        log.error("Bad request: {}", ex.getMessage(), ex);
+        log.error("Petición incorrecta: {}", ex.getMessage(), ex);
         
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now().toString());
@@ -83,15 +84,15 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles ServiceUnavailableException.
+     * Maneja ServiceUnavailableException.
      *
-     * @param ex the exception
-     * @param request the web request
-     * @return the response entity
+     * @param ex la excepción
+     * @param request la petición web
+     * @return ResponseEntity con el cuerpo de error formateado
      */
     @ExceptionHandler(ServiceUnavailableException.class)
     public ResponseEntity<Object> handleServiceUnavailableException(ServiceUnavailableException ex, WebRequest request) {
-        log.error("Service unavailable: {}", ex.getMessage(), ex);
+        log.error("Servicio no disponible: {}", ex.getMessage(), ex);
         
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now().toString());

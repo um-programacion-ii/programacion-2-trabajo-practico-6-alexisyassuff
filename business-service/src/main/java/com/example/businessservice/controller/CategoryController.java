@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * REST controller for managing categories in the business service.
+ * Controlador REST para la gestión de categorías en el servicio de negocio.
  */
 @RestController
 @RequestMapping("/api/categories")
@@ -19,15 +19,22 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    /**
+     * Constructor con inyección de dependencias.
+     *
+     * @param categoryService servicio de categorías
+     */
     @Autowired
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
+    // ==================== Métodos GET ====================
+
     /**
-     * GET /api/categories : Get all categories.
+     * GET /api/categories : Obtiene todas las categorías.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of categories in the body
+     * @return ResponseEntity con estado 200 (OK) y la lista de categorías en el cuerpo
      */
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
@@ -36,11 +43,11 @@ public class CategoryController {
     }
 
     /**
-     * GET /api/categories/{id} : Get the category with the specified ID.
+     * GET /api/categories/{id} : Obtiene una categoría por su ID.
      *
-     * @param id the ID of the category to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the category in the body,
-     *         or with status 404 (Not Found) if the category is not found
+     * @param id el ID de la categoría a obtener
+     * @return ResponseEntity con estado 200 (OK) y la categoría en el cuerpo,
+     *         o con estado 404 (Not Found) si la categoría no se encuentra
      */
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
@@ -53,11 +60,11 @@ public class CategoryController {
     }
 
     /**
-     * GET /api/categories/name/{name} : Get the category with the specified name.
+     * GET /api/categories/name/{name} : Obtiene una categoría por su nombre.
      *
-     * @param name the name of the category to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the category in the body,
-     *         or with status 404 (Not Found) if the category is not found
+     * @param name el nombre de la categoría a obtener
+     * @return ResponseEntity con estado 200 (OK) y la categoría en el cuerpo,
+     *         o con estado 404 (Not Found) si la categoría no se encuentra
      */
     @GetMapping("/name/{name}")
     public ResponseEntity<CategoryDTO> getCategoryByName(@PathVariable String name) {
@@ -70,10 +77,10 @@ public class CategoryController {
     }
 
     /**
-     * GET /api/categories/search : Search categories by name.
+     * GET /api/categories/search : Busca categorías por nombre.
      *
-     * @param name the name pattern to search for
-     * @return the ResponseEntity with status 200 (OK) and the list of matching categories in the body
+     * @param name el patrón de nombre a buscar
+     * @return ResponseEntity con estado 200 (OK) y la lista de categorías que coinciden en el cuerpo
      */
     @GetMapping("/search")
     public ResponseEntity<List<CategoryDTO>> searchCategoriesByName(@RequestParam String name) {
@@ -81,11 +88,14 @@ public class CategoryController {
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
+    // ==================== Métodos POST ====================
+
     /**
-     * POST /api/categories : Create a new category.
+     * POST /api/categories : Crea una nueva categoría.
      *
-     * @param categoryDTO the category to create
-     * @return the ResponseEntity with status 201 (Created) and the new category in the body
+     * @param categoryDTO la categoría a crear
+     * @return ResponseEntity con estado 201 (Created) y la nueva categoría en el cuerpo,
+     *         o con estado 500 (Internal Server Error) si ocurre un error
      */
     @PostMapping
     public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
@@ -97,13 +107,15 @@ public class CategoryController {
         }
     }
 
+    // ==================== Métodos PUT ====================
+
     /**
-     * PUT /api/categories/{id} : Update an existing category.
+     * PUT /api/categories/{id} : Actualiza una categoría existente.
      *
-     * @param id the ID of the category to update
-     * @param categoryDTO the updated category data
-     * @return the ResponseEntity with status 200 (OK) and the updated category in the body,
-     *         or with status 404 (Not Found) if the category is not found
+     * @param id el ID de la categoría a actualizar
+     * @param categoryDTO los datos actualizados de la categoría
+     * @return ResponseEntity con estado 200 (OK) y la categoría actualizada en el cuerpo,
+     *         o con estado 404 (Not Found) si la categoría no se encuentra
      */
     @PutMapping("/{id}")
     public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDTO categoryDTO) {
@@ -115,11 +127,13 @@ public class CategoryController {
         }
     }
 
+    // ==================== Métodos DELETE ====================
+
     /**
-     * DELETE /api/categories/{id} : Delete a category.
+     * DELETE /api/categories/{id} : Elimina una categoría.
      *
-     * @param id the ID of the category to delete
-     * @return the ResponseEntity with status 204 (No Content)
+     * @param id el ID de la categoría a eliminar
+     * @return ResponseEntity con estado 204 (No Content)
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
