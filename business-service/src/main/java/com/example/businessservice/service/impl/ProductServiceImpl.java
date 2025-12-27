@@ -14,14 +14,19 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Implementation of the ProductService interface.
- * Uses Feign client to communicate with the data service.
+ * Implementación de la interfaz ProductService.
+ * Utiliza el cliente Feign para comunicarse con el servicio de datos.
  */
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private final ProductClient productClient;
 
+    /**
+     * Constructor con inyección de dependencias.
+     *
+     * @param productClient cliente Feign para productos
+     */
     @Autowired
     public ProductServiceImpl(ProductClient productClient) {
         this.productClient = productClient;
@@ -200,9 +205,15 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
-    // Helper methods for conversion between data service objects and DTOs
-    // In a real implementation, you would use a mapper like ModelMapper or MapStruct
-    
+    // ==================== Métodos Privados de Conversión ====================
+
+    /**
+     * Convierte un objeto del servicio de datos a un ProductDTO.
+     * En una implementación real, se utilizaría un mapper como ModelMapper o MapStruct.
+     *
+     * @param productData el objeto de datos del producto
+     * @return el ProductDTO convertido
+     */
     private ProductDTO convertToProductDTO(Object productData) {
         if (productData == null) {
             return null;
@@ -286,6 +297,12 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    /**
+     * Convierte un objeto del servicio de datos a un CategoryDTO.
+     *
+     * @param categoryData el objeto de datos de la categoría
+     * @return el CategoryDTO convertido
+     */
     private CategoryDTO convertToCategoryDTO(Object categoryData) {
         if (categoryData == null) {
             return null;
@@ -328,6 +345,12 @@ public class ProductServiceImpl implements ProductService {
         }
     }
     
+    /**
+     * Convierte una lista de objetos del servicio de datos a una lista de ProductDTO.
+     *
+     * @param productDataList la lista de objetos de datos de productos
+     * @return la lista de ProductDTO convertida
+     */
     private List<ProductDTO> convertToProductDTOList(List<Object> productDataList) {
         if (productDataList == null) {
             return Collections.emptyList();
@@ -342,8 +365,14 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
     
+    /**
+     * Convierte un ProductDTO a un objeto compatible para enviar al servicio de datos.
+     * Conversión mínima: envía el DTO tal cual, el servicio de datos puede aceptar JSON compatible.
+     *
+     * @param productDTO el ProductDTO a convertir
+     * @return el objeto compatible para enviar al servicio de datos
+     */
     private Object convertFromProductDTO(ProductDTO productDTO) {
-        // Minimal conversion: send the DTO as-is; the data-service can accept compatible JSON
         return productDTO;
     }
 }

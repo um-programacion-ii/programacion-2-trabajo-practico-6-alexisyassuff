@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Implementation of the CategoryService interface.
- * Uses Feign client to communicate with the data service.
+ * Implementación de la interfaz CategoryService.
+ * Utiliza el cliente Feign para comunicarse con el servicio de datos.
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -30,6 +30,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryClient categoryClient;
 
+    /**
+     * Constructor con inyección de dependencias.
+     *
+     * @param categoryClient cliente Feign para categorías
+     */
     @Autowired
     public CategoryServiceImpl(CategoryClient categoryClient) {
         this.categoryClient = categoryClient;
@@ -196,8 +201,14 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
-    // Helper methods for conversion between data service objects and DTOs
+    // ==================== Métodos Privados de Conversión ====================
 
+    /**
+     * Convierte un objeto del servicio de datos a un CategoryDTO.
+     *
+     * @param categoryData el objeto de datos de la categoría
+     * @return el CategoryDTO convertido
+     */
     private CategoryDTO convertToCategoryDTO(Object categoryData) {
         if (categoryData == null) {
             return null;
@@ -267,6 +278,12 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
+    /**
+     * Convierte una lista de objetos del servicio de datos a una lista de CategoryDTO.
+     *
+     * @param categoryDataList la lista de objetos de datos de categorías
+     * @return la lista de CategoryDTO convertida
+     */
     private List<CategoryDTO> convertToCategoryDTOList(List<Object> categoryDataList) {
         if (categoryDataList == null) {
             return Collections.emptyList();
@@ -282,6 +299,12 @@ public class CategoryServiceImpl implements CategoryService {
         return result;
     }
 
+    /**
+     * Convierte un CategoryDTO a un objeto compatible para enviar al servicio de datos.
+     *
+     * @param categoryDTO el CategoryDTO a convertir
+     * @return el objeto compatible para enviar al servicio de datos
+     */
     private Object convertFromCategoryDTO(CategoryDTO categoryDTO) {
         if (categoryDTO == null) {
             return null;

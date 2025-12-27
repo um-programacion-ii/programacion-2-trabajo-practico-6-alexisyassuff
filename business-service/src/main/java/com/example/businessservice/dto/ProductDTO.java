@@ -7,7 +7,8 @@ import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 /**
- * Data Transfer Object for Product entity.
+ * Objeto de transferencia de datos (DTO) para la entidad Product.
+ * Se utiliza para transferir datos de productos entre el servicio de negocio y el servicio de datos.
  */
 public class ProductDTO {
 
@@ -24,11 +25,20 @@ public class ProductDTO {
 
     private CategoryDTO category;
 
-    // Default constructor
+    /**
+     * Constructor por defecto sin argumentos.
+     */
     public ProductDTO() {
     }
 
-    // Constructor with fields
+    /**
+     * Constructor con los campos principales del producto.
+     *
+     * @param id el ID del producto
+     * @param name el nombre del producto
+     * @param description la descripción del producto
+     * @param price el precio del producto
+     */
     public ProductDTO(Long id, String name, String description, BigDecimal price) {
         this.id = id;
         this.name = name;
@@ -36,7 +46,15 @@ public class ProductDTO {
         this.price = price;
     }
 
-    // Constructor with all fields
+    /**
+     * Constructor completo con todos los campos incluyendo la categoría.
+     *
+     * @param id el ID del producto
+     * @param name el nombre del producto
+     * @param description la descripción del producto
+     * @param price el precio del producto
+     * @param category la categoría del producto
+     */
     public ProductDTO(Long id, String name, String description, BigDecimal price, CategoryDTO category) {
         this.id = id;
         this.name = name;
@@ -45,7 +63,8 @@ public class ProductDTO {
         this.category = category;
     }
 
-    // Getters and Setters
+    // ==================== Getters y Setters ====================
+
     public Long getId() {
         return id;
     }
@@ -85,6 +104,8 @@ public class ProductDTO {
     public void setCategory(CategoryDTO category) {
         this.category = category;
     }
+
+    // ==================== Métodos heredados ====================
 
     @Override
     public String toString() {
