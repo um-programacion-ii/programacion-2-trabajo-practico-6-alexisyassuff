@@ -7,70 +7,80 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Feign client for communicating with the category endpoints in the data service.
+ * Cliente Feign para comunicarse con los endpoints de categorías en el servicio de datos.
  */
 @FeignClient(name = "category-service", url = "${data-service.url}/data/categories")
 public interface CategoryClient {
 
+    // ==================== Métodos GET - Consultas Básicas ====================
+
     /**
-     * Get all categories.
+     * Obtiene todas las categorías.
      *
-     * @return ResponseEntity containing a list of categories
+     * @return ResponseEntity que contiene una lista de categorías
      */
     @GetMapping
     ResponseEntity<List<Object>> getAllCategories();
 
     /**
-     * Get a category by its ID.
+     * Obtiene una categoría por su ID.
      *
-     * @param id the category ID
-     * @return ResponseEntity containing the category
+     * @param id el ID de la categoría
+     * @return ResponseEntity que contiene la categoría
      */
     @GetMapping("/{id}")
     ResponseEntity<Object> getCategoryById(@PathVariable("id") Long id);
 
     /**
-     * Get a category by its name.
+     * Obtiene una categoría por su nombre.
      *
-     * @param name the category name
-     * @return ResponseEntity containing the category
+     * @param name el nombre de la categoría
+     * @return ResponseEntity que contiene la categoría
      */
     @GetMapping("/name/{name}")
     ResponseEntity<Object> getCategoryByName(@PathVariable("name") String name);
 
+    // ==================== Métodos GET - Búsquedas y Filtros ====================
+
     /**
-     * Search categories by name.
+     * Busca categorías por nombre.
      *
-     * @param name the name pattern to search for
-     * @return ResponseEntity containing a list of matching categories
+     * @param name el patrón de nombre a buscar
+     * @return ResponseEntity que contiene una lista de categorías que coinciden
      */
     @GetMapping("/search")
     ResponseEntity<List<Object>> searchCategoriesByName(@RequestParam("name") String name);
 
+    // ==================== Métodos POST ====================
+
     /**
-     * Create a new category.
+     * Crea una nueva categoría.
      *
-     * @param category the category to create
-     * @return ResponseEntity containing the created category
+     * @param category la categoría a crear
+     * @return ResponseEntity que contiene la categoría creada
      */
     @PostMapping
     ResponseEntity<Object> createCategory(@RequestBody Object category);
 
+    // ==================== Métodos PUT ====================
+
     /**
-     * Update an existing category.
+     * Actualiza una categoría existente.
      *
-     * @param id the category ID
-     * @param category the updated category data
-     * @return ResponseEntity containing the updated category
+     * @param id el ID de la categoría
+     * @param category los datos actualizados de la categoría
+     * @return ResponseEntity que contiene la categoría actualizada
      */
     @PutMapping("/{id}")
     ResponseEntity<Object> updateCategory(@PathVariable("id") Long id, @RequestBody Object category);
 
+    // ==================== Métodos DELETE ====================
+
     /**
-     * Delete a category.
+     * Elimina una categoría.
      *
-     * @param id the category ID
-     * @return ResponseEntity with no content
+     * @param id el ID de la categoría
+     * @return ResponseEntity sin contenido
      */
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteCategory(@PathVariable("id") Long id);

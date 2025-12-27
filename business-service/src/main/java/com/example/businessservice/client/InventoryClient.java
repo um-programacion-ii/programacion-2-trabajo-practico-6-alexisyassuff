@@ -7,138 +7,148 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Feign client for communicating with the inventory endpoints in the data service.
+ * Cliente Feign para comunicarse con los endpoints de inventario en el servicio de datos.
  */
 @FeignClient(name = "inventory-service", url = "${data-service.url}/data/inventory")
 public interface InventoryClient {
 
+    // ==================== Métodos GET - Consultas Básicas ====================
+
     /**
-     * Get all inventory items.
+     * Obtiene todos los registros de inventario.
      *
-     * @return ResponseEntity containing a list of inventory items
+     * @return ResponseEntity que contiene una lista de registros de inventario
      */
     @GetMapping
     ResponseEntity<List<Object>> getAllInventoryItems();
 
     /**
-     * Get an inventory item by its ID.
+     * Obtiene un registro de inventario por su ID.
      *
-     * @param id the inventory item ID
-     * @return ResponseEntity containing the inventory item
+     * @param id el ID del registro de inventario
+     * @return ResponseEntity que contiene el registro de inventario
      */
     @GetMapping("/{id}")
     ResponseEntity<Object> getInventoryItemById(@PathVariable("id") Long id);
 
+    // ==================== Métodos GET - Búsquedas y Filtros ====================
+
     /**
-     * Get inventory items by product ID.
+     * Obtiene registros de inventario por ID de producto.
      *
-     * @param productId the product ID
-     * @return ResponseEntity containing a list of inventory items for the specified product
+     * @param productId el ID del producto
+     * @return ResponseEntity que contiene una lista de registros de inventario para el producto especificado
      */
     @GetMapping("/product/{productId}")
     ResponseEntity<List<Object>> getInventoryItemsByProductId(@PathVariable("productId") Long productId);
 
     /**
-     * Get inventory items by location.
+     * Obtiene registros de inventario por ubicación.
      *
-     * @param location the location
-     * @return ResponseEntity containing a list of inventory items at the specified location
+     * @param location la ubicación
+     * @return ResponseEntity que contiene una lista de registros de inventario en la ubicación especificada
      */
     @GetMapping("/location/{location}")
     ResponseEntity<List<Object>> getInventoryItemsByLocation(@PathVariable("location") String location);
 
     /**
-     * Get inventory items with quantity less than the given value.
+     * Obtiene registros de inventario con cantidad menor al valor especificado.
      *
-     * @param quantity the quantity threshold
-     * @return ResponseEntity containing a list of inventory items with quantity less than the given value
+     * @param quantity el umbral de cantidad
+     * @return ResponseEntity que contiene una lista de registros de inventario con cantidad menor al valor dado
      */
     @GetMapping("/quantity/less/{quantity}")
     ResponseEntity<List<Object>> getInventoryItemsByQuantityLessThan(@PathVariable("quantity") Integer quantity);
 
     /**
-     * Get inventory items with quantity greater than the given value.
+     * Obtiene registros de inventario con cantidad mayor al valor especificado.
      *
-     * @param quantity the quantity threshold
-     * @return ResponseEntity containing a list of inventory items with quantity greater than the given value
+     * @param quantity el umbral de cantidad
+     * @return ResponseEntity que contiene una lista de registros de inventario con cantidad mayor al valor dado
      */
     @GetMapping("/quantity/greater/{quantity}")
     ResponseEntity<List<Object>> getInventoryItemsByQuantityGreaterThan(@PathVariable("quantity") Integer quantity);
 
     /**
-     * Get inventory items with quantity between the given values.
+     * Obtiene registros de inventario con cantidad entre los valores especificados.
      *
-     * @param minQuantity the minimum quantity
-     * @param maxQuantity the maximum quantity
-     * @return ResponseEntity containing a list of inventory items with quantity between the given values
+     * @param minQuantity la cantidad mínima
+     * @param maxQuantity la cantidad máxima
+     * @return ResponseEntity que contiene una lista de registros de inventario con cantidad dentro del rango especificado
      */
     @GetMapping("/quantity/range")
     ResponseEntity<List<Object>> getInventoryItemsByQuantityBetween(
-            @RequestParam("minQuantity") Integer minQuantity, 
+            @RequestParam("minQuantity") Integer minQuantity,
             @RequestParam("maxQuantity") Integer maxQuantity);
 
     /**
-     * Get inventory items by product name.
+     * Obtiene registros de inventario por nombre de producto.
      *
-     * @param productName the product name
-     * @return ResponseEntity containing a list of inventory items for products matching the given name
+     * @param productName el nombre del producto
+     * @return ResponseEntity que contiene una lista de registros de inventario para productos que coinciden con el nombre dado
      */
     @GetMapping("/product/name/{productName}")
     ResponseEntity<List<Object>> getInventoryItemsByProductName(@PathVariable("productName") String productName);
 
     /**
-     * Get inventory items by product category.
+     * Obtiene registros de inventario por categoría de producto.
      *
-     * @param categoryId the category ID
-     * @return ResponseEntity containing a list of inventory items for products in the specified category
+     * @param categoryId el ID de la categoría
+     * @return ResponseEntity que contiene una lista de registros de inventario para productos en la categoría especificada
      */
     @GetMapping("/category/{categoryId}")
     ResponseEntity<List<Object>> getInventoryItemsByProductCategory(@PathVariable("categoryId") Long categoryId);
 
     /**
-     * Get out-of-stock inventory items.
+     * Obtiene registros de inventario sin stock (cantidad = 0).
      *
-     * @return ResponseEntity containing a list of out-of-stock inventory items
+     * @return ResponseEntity que contiene una lista de registros de inventario sin stock
      */
     @GetMapping("/out-of-stock")
     ResponseEntity<List<Object>> getOutOfStockItems();
 
+    // ==================== Métodos POST ====================
+
     /**
-     * Create a new inventory item.
+     * Crea un nuevo registro de inventario.
      *
-     * @param inventory the inventory item to create
-     * @return ResponseEntity containing the created inventory item
+     * @param inventory el registro de inventario a crear
+     * @return ResponseEntity que contiene el registro de inventario creado
      */
     @PostMapping
     ResponseEntity<Object> createInventoryItem(@RequestBody Object inventory);
 
+    // ==================== Métodos PUT ====================
+
     /**
-     * Update an existing inventory item.
+     * Actualiza un registro de inventario existente.
      *
-     * @param id the inventory item ID
-     * @param inventory the updated inventory data
-     * @return ResponseEntity containing the updated inventory item
+     * @param id el ID del registro de inventario
+     * @param inventory los datos actualizados del inventario
+     * @return ResponseEntity que contiene el registro de inventario actualizado
      */
     @PutMapping("/{id}")
     ResponseEntity<Object> updateInventoryItem(@PathVariable("id") Long id, @RequestBody Object inventory);
 
     /**
-     * Update the quantity of an inventory item.
+     * Actualiza la cantidad de un registro de inventario.
      *
-     * @param id the inventory item ID
-     * @param quantity the new quantity
-     * @return ResponseEntity containing the updated inventory item
+     * @param id el ID del registro de inventario
+     * @param quantity la nueva cantidad
+     * @return ResponseEntity que contiene el registro de inventario actualizado
      */
     @PatchMapping("/{id}/quantity/{quantity}")
     ResponseEntity<Object> updateInventoryQuantity(
-            @PathVariable("id") Long id, 
+            @PathVariable("id") Long id,
             @PathVariable("quantity") Integer quantity);
 
+    // ==================== Métodos DELETE ====================
+
     /**
-     * Delete an inventory item.
+     * Elimina un registro de inventario.
      *
-     * @param id the inventory item ID
-     * @return ResponseEntity with no content
+     * @param id el ID del registro de inventario
+     * @return ResponseEntity sin contenido
      */
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteInventoryItem(@PathVariable("id") Long id);

@@ -8,130 +8,140 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Feign client for communicating with the product endpoints in the data service.
+ * Cliente Feign para comunicarse con los endpoints de productos en el servicio de datos.
  */
 @FeignClient(name = "product-service", url = "${data-service.url}/data/products")
 public interface ProductClient {
 
+    // ==================== Métodos GET - Consultas Básicas ====================
+
     /**
-     * Get all products.
+     * Obtiene todos los productos.
      *
-     * @return ResponseEntity containing a list of products
+     * @return ResponseEntity que contiene una lista de productos
      */
     @GetMapping
     ResponseEntity<List<Object>> getAllProducts();
 
     /**
-     * Get a product by its ID.
+     * Obtiene un producto por su ID.
      *
-     * @param id the product ID
-     * @return ResponseEntity containing the product
+     * @param id el ID del producto
+     * @return ResponseEntity que contiene el producto
      */
     @GetMapping("/{id}")
     ResponseEntity<Object> getProductById(@PathVariable("id") Long id);
 
+    // ==================== Métodos GET - Búsquedas y Filtros ====================
+
     /**
-     * Search products by name.
+     * Busca productos por nombre.
      *
-     * @param name the name pattern to search for
-     * @return ResponseEntity containing a list of matching products
+     * @param name el patrón de nombre a buscar
+     * @return ResponseEntity que contiene una lista de productos que coinciden
      */
     @GetMapping("/search")
     ResponseEntity<List<Object>> searchProductsByName(@RequestParam("name") String name);
 
     /**
-     * Get products by category ID.
+     * Obtiene productos por ID de categoría.
      *
-     * @param categoryId the category ID
-     * @return ResponseEntity containing a list of products in the specified category
+     * @param categoryId el ID de la categoría
+     * @return ResponseEntity que contiene una lista de productos en la categoría especificada
      */
     @GetMapping("/category/{categoryId}")
     ResponseEntity<List<Object>> getProductsByCategoryId(@PathVariable("categoryId") Long categoryId);
 
     /**
-     * Get products by category name.
+     * Obtiene productos por nombre de categoría.
      *
-     * @param categoryName the category name
-     * @return ResponseEntity containing a list of products in the specified category
+     * @param categoryName el nombre de la categoría
+     * @return ResponseEntity que contiene una lista de productos en la categoría especificada
      */
     @GetMapping("/category/name/{categoryName}")
     ResponseEntity<List<Object>> getProductsByCategoryName(@PathVariable("categoryName") String categoryName);
 
     /**
-     * Get products with price less than or equal to the given value.
+     * Obtiene productos con precio menor o igual al valor especificado.
      *
-     * @param maxPrice the maximum price
-     * @return ResponseEntity containing a list of products with price less than or equal to the given value
+     * @param maxPrice el precio máximo
+     * @return ResponseEntity que contiene una lista de productos con precio menor o igual al valor dado
      */
     @GetMapping("/price/max/{maxPrice}")
     ResponseEntity<List<Object>> getProductsByMaxPrice(@PathVariable("maxPrice") BigDecimal maxPrice);
 
     /**
-     * Get products with price greater than or equal to the given value.
+     * Obtiene productos con precio mayor o igual al valor especificado.
      *
-     * @param minPrice the minimum price
-     * @return ResponseEntity containing a list of products with price greater than or equal to the given value
+     * @param minPrice el precio mínimo
+     * @return ResponseEntity que contiene una lista de productos con precio mayor o igual al valor dado
      */
     @GetMapping("/price/min/{minPrice}")
     ResponseEntity<List<Object>> getProductsByMinPrice(@PathVariable("minPrice") BigDecimal minPrice);
 
     /**
-     * Get products with price between the given values.
+     * Obtiene productos con precio entre los valores especificados.
      *
-     * @param minPrice the minimum price
-     * @param maxPrice the maximum price
-     * @return ResponseEntity containing a list of products with price between the given values
+     * @param minPrice el precio mínimo
+     * @param maxPrice el precio máximo
+     * @return ResponseEntity que contiene una lista de productos con precio dentro del rango especificado
      */
     @GetMapping("/price/range")
     ResponseEntity<List<Object>> getProductsByPriceRange(
-            @RequestParam("minPrice") BigDecimal minPrice, 
+            @RequestParam("minPrice") BigDecimal minPrice,
             @RequestParam("maxPrice") BigDecimal maxPrice);
 
+    // ==================== Métodos POST ====================
+
     /**
-     * Create a new product.
+     * Crea un nuevo producto.
      *
-     * @param product the product to create
-     * @return ResponseEntity containing the created product
+     * @param product el producto a crear
+     * @return ResponseEntity que contiene el producto creado
      */
     @PostMapping
     ResponseEntity<Object> createProduct(@RequestBody Object product);
 
+    // ==================== Métodos PUT ====================
+
     /**
-     * Update an existing product.
+     * Actualiza un producto existente.
      *
-     * @param id the product ID
-     * @param product the updated product data
-     * @return ResponseEntity containing the updated product
+     * @param id el ID del producto
+     * @param product los datos actualizados del producto
+     * @return ResponseEntity que contiene el producto actualizado
      */
     @PutMapping("/{id}")
     ResponseEntity<Object> updateProduct(@PathVariable("id") Long id, @RequestBody Object product);
 
     /**
-     * Delete a product.
+     * Asigna una categoría a un producto.
      *
-     * @param id the product ID
-     * @return ResponseEntity with no content
+     * @param productId el ID del producto
+     * @param categoryId el ID de la categoría
+     * @return ResponseEntity que contiene el producto actualizado
+     */
+    @PutMapping("/{productId}/category/{categoryId}")
+    ResponseEntity<Object> assignCategoryToProduct(
+            @PathVariable("productId") Long productId,
+            @PathVariable("categoryId") Long categoryId);
+
+    // ==================== Métodos DELETE ====================
+
+    /**
+     * Elimina un producto.
+     *
+     * @param id el ID del producto
+     * @return ResponseEntity sin contenido
      */
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id);
 
     /**
-     * Assign a category to a product.
+     * Remueve la categoría de un producto.
      *
-     * @param productId the product ID
-     * @param categoryId the category ID
-     * @return ResponseEntity containing the updated product
-     */
-    @PutMapping("/{productId}/category/{categoryId}")
-    ResponseEntity<Object> assignCategoryToProduct(
-            @PathVariable("productId") Long productId, 
-            @PathVariable("categoryId") Long categoryId);
-
-    /**
-     * Remove the category from a product.
-     *
-     * @param productId the product ID
-     * @return ResponseEntity containing the updated product
+     * @param productId el ID del producto
+     * @return ResponseEntity que contiene el producto actualizado
      */
     @DeleteMapping("/{productId}/category")
     ResponseEntity<Object> removeCategoryFromProduct(@PathVariable("productId") Long productId);
