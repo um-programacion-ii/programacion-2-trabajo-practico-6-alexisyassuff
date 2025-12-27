@@ -12,81 +12,81 @@ import java.util.Optional;
 public interface CategoryService {
     
     /**
-     * Get all categories.
+     * Obtiene todas las categorías.
      *
-     * @return list of all categories
+     * @return lista de todas las categorías
      */
     List<Category> getAllCategories();
     
     /**
-     * Get a category by its ID.
+     * Obtiene una categoría por su ID.
      *
-     * @param id the category ID
-     * @return the category if found
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the category is not found
+     * @param id el ID de la categoría
+     * @return la categoría si se encuentra
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si la categoría no se encuentra
      */
     Category getCategoryById(Long id);
     
     /**
-     * Get a category by its name.
+     * Obtiene una categoría por su nombre.
      *
-     * @param name the category name
-     * @return the category if found
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the category is not found
+     * @param name el nombre de la categoría
+     * @return la categoría si se encuentra
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si la categoría no se encuentra
      */
     Category getCategoryByName(String name);
     
     /**
-     * Find categories by name containing the given string (case insensitive).
+     * Busca categorías cuyo nombre contenga la cadena especificada (sin distinguir mayúsculas/minúsculas).
      *
-     * @param name the name pattern to search for
-     * @return list of categories matching the name pattern
+     * @param name el patrón de nombre a buscar
+     * @return lista de categorías que coinciden con el patrón de nombre
      */
     List<Category> findCategoriesByNameContaining(String name);
     
     /**
-     * Create a new category.
+     * Crea una nueva categoría.
      *
-     * @param category the category to create
-     * @return the created category
-     * @throws com.example.dataservice.exception.DuplicateResourceException if a category with the same name already exists
-     * @throws com.example.dataservice.exception.ValidationException if the category data is invalid
+     * @param category la categoría a crear
+     * @return la categoría creada
+     * @throws com.example.dataservice.exception.DuplicateResourceException si ya existe una categoría con el mismo nombre
+     * @throws com.example.dataservice.exception.ValidationException si los datos de la categoría son inválidos
      */
     Category createCategory(Category category);
     
     /**
-     * Update an existing category.
+     * Actualiza una categoría existente.
      *
-     * @param id the category ID
-     * @param categoryDetails the updated category data
-     * @return the updated category
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the category is not found
-     * @throws com.example.dataservice.exception.DuplicateResourceException if the new name conflicts with an existing category
-     * @throws com.example.dataservice.exception.ValidationException if the category data is invalid
+     * @param id el ID de la categoría
+     * @param categoryDetails los datos actualizados de la categoría
+     * @return la categoría actualizada
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si la categoría no se encuentra
+     * @throws com.example.dataservice.exception.DuplicateResourceException si el nuevo nombre entra en conflicto con una categoría existente
+     * @throws com.example.dataservice.exception.ValidationException si los datos de la categoría son inválidos
      */
     Category updateCategory(Long id, Category categoryDetails);
     
     /**
-     * Delete a category by its ID.
+     * Elimina una categoría por su ID.
      *
-     * @param id the category ID
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the category is not found
+     * @param id el ID de la categoría
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si la categoría no se encuentra
      */
     void deleteCategory(Long id);
     
     /**
-     * Check if a category exists with the given ID.
+     * Verifica si existe una categoría con el ID especificado.
      *
-     * @param id the category ID
-     * @return true if the category exists
+     * @param id el ID de la categoría
+     * @return true si la categoría existe
      */
     boolean existsById(Long id);
     
     /**
-     * Check if a category exists with the given name.
+     * Verifica si existe una categoría con el nombre especificado.
      *
-     * @param name the category name
-     * @return true if the category exists
+     * @param name el nombre de la categoría
+     * @return true si la categoría existe
      */
     boolean existsByName(String name);
 }

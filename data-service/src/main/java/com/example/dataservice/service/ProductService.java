@@ -12,123 +12,123 @@ import java.util.List;
 public interface ProductService {
     
     /**
-     * Get all products.
+     * Obtiene todos los productos.
      *
-     * @return list of all products
+     * @return lista de todos los productos
      */
     List<Product> getAllProducts();
     
     /**
-     * Get a product by its ID.
+     * Obtiene un producto por su ID.
      *
-     * @param id the product ID
-     * @return the product if found
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the product is not found
+     * @param id el ID del producto
+     * @return el producto si se encuentra
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si el producto no se encuentra
      */
     Product getProductById(Long id);
     
     /**
-     * Find products by name containing the given string (case insensitive).
+     * Busca productos cuyo nombre contenga la cadena especificada (sin distinguir mayúsculas/minúsculas).
      *
-     * @param name the name pattern to search for
-     * @return list of products matching the name pattern
+     * @param name el patrón de nombre a buscar
+     * @return lista de productos que coinciden con el patrón de nombre
      */
     List<Product> findProductsByNameContaining(String name);
     
     /**
-     * Find products by category ID.
+     * Busca productos por ID de categoría.
      *
-     * @param categoryId the category ID
-     * @return list of products in the specified category
+     * @param categoryId el ID de la categoría
+     * @return lista de productos en la categoría especificada
      */
     List<Product> findProductsByCategoryId(Long categoryId);
     
     /**
-     * Find products by category name.
+     * Busca productos por nombre de categoría.
      *
-     * @param categoryName the category name
-     * @return list of products in the specified category
+     * @param categoryName el nombre de la categoría
+     * @return lista de productos en la categoría especificada
      */
     List<Product> findProductsByCategoryName(String categoryName);
     
     /**
-     * Find products with price less than or equal to the given value.
+     * Busca productos con precio menor o igual al valor especificado.
      *
-     * @param price the maximum price
-     * @return list of products with price less than or equal to the given value
+     * @param price el precio máximo
+     * @return lista de productos con precio menor o igual al valor dado
      */
     List<Product> findProductsByPriceLessThanEqual(BigDecimal price);
     
     /**
-     * Find products with price greater than or equal to the given value.
+     * Busca productos con precio mayor o igual al valor especificado.
      *
-     * @param price the minimum price
-     * @return list of products with price greater than or equal to the given value
+     * @param price el precio mínimo
+     * @return lista de productos con precio mayor o igual al valor dado
      */
     List<Product> findProductsByPriceGreaterThanEqual(BigDecimal price);
     
     /**
-     * Find products with price between the given values.
+     * Busca productos con precio entre los valores especificados (inclusive).
      *
-     * @param minPrice the minimum price
-     * @param maxPrice the maximum price
-     * @return list of products with price between the given values
+     * @param minPrice el precio mínimo
+     * @param maxPrice el precio máximo
+     * @return lista de productos con precio dentro del rango especificado
      */
     List<Product> findProductsByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
     
     /**
-     * Create a new product.
+     * Crea un nuevo producto.
      *
-     * @param product the product to create
-     * @return the created product
-     * @throws com.example.dataservice.exception.ValidationException if the product data is invalid
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the referenced category is not found
+     * @param product el producto a crear
+     * @return el producto creado
+     * @throws com.example.dataservice.exception.ValidationException si los datos del producto son inválidos
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si la categoría referenciada no se encuentra
      */
     Product createProduct(Product product);
     
     /**
-     * Update an existing product.
+     * Actualiza un producto existente.
      *
-     * @param id the product ID
-     * @param productDetails the updated product data
-     * @return the updated product
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the product is not found
-     * @throws com.example.dataservice.exception.ValidationException if the product data is invalid
+     * @param id el ID del producto
+     * @param productDetails los datos actualizados del producto
+     * @return el producto actualizado
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si el producto no se encuentra
+     * @throws com.example.dataservice.exception.ValidationException si los datos del producto son inválidos
      */
     Product updateProduct(Long id, Product productDetails);
     
     /**
-     * Delete a product by its ID.
+     * Elimina un producto por su ID.
      *
-     * @param id the product ID
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the product is not found
+     * @param id el ID del producto
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si el producto no se encuentra
      */
     void deleteProduct(Long id);
     
     /**
-     * Check if a product exists with the given ID.
+     * Verifica si existe un producto con el ID especificado.
      *
-     * @param id the product ID
-     * @return true if the product exists
+     * @param id el ID del producto
+     * @return true si el producto existe
      */
     boolean existsById(Long id);
     
     /**
-     * Assign a category to a product.
+     * Asigna una categoría a un producto.
      *
-     * @param productId the product ID
-     * @param categoryId the category ID
-     * @return the updated product
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the product or category is not found
+     * @param productId el ID del producto
+     * @param categoryId el ID de la categoría
+     * @return el producto actualizado
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si el producto o categoría no se encuentran
      */
     Product assignCategoryToProduct(Long productId, Long categoryId);
     
     /**
-     * Remove the category from a product.
+     * Remueve la categoría de un producto.
      *
-     * @param productId the product ID
-     * @return the updated product
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the product is not found
+     * @param productId el ID del producto
+     * @return el producto actualizado
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si el producto no se encuentra
      */
     Product removeCategoryFromProduct(Long productId);
 }
