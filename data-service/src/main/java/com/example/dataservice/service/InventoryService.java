@@ -11,130 +11,130 @@ import java.util.List;
 public interface InventoryService {
     
     /**
-     * Get all inventory items.
+     * Obtiene todos los registros de inventario.
      *
-     * @return list of all inventory items
+     * @return lista de todos los registros de inventario
      */
     List<Inventory> getAllInventoryItems();
     
     /**
-     * Get an inventory item by its ID.
+     * Obtiene un registro de inventario por su ID.
      *
-     * @param id the inventory item ID
-     * @return the inventory item if found
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the inventory item is not found
+     * @param id el ID del registro de inventario
+     * @return el registro de inventario si se encuentra
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si el registro de inventario no se encuentra
      */
     Inventory getInventoryItemById(Long id);
     
     /**
-     * Find inventory items by product ID.
+     * Busca registros de inventario por ID de producto.
      *
-     * @param productId the product ID
-     * @return list of inventory items for the specified product
+     * @param productId el ID del producto
+     * @return lista de registros de inventario para el producto especificado
      */
     List<Inventory> findInventoryItemsByProductId(Long productId);
     
     /**
-     * Find inventory items by location.
+     * Busca registros de inventario por ubicación.
      *
-     * @param location the location
-     * @return list of inventory items at the specified location
+     * @param location la ubicación
+     * @return lista de registros de inventario en la ubicación especificada
      */
     List<Inventory> findInventoryItemsByLocation(String location);
     
     /**
-     * Find inventory items with quantity less than the given value.
+     * Busca registros de inventario con cantidad menor al valor especificado.
      *
-     * @param quantity the quantity threshold
-     * @return list of inventory items with quantity less than the given value
+     * @param quantity el umbral de cantidad
+     * @return lista de registros de inventario con cantidad menor al valor dado
      */
     List<Inventory> findInventoryItemsByQuantityLessThan(Integer quantity);
     
     /**
-     * Find inventory items with quantity greater than the given value.
+     * Busca registros de inventario con cantidad mayor al valor especificado.
      *
-     * @param quantity the quantity threshold
-     * @return list of inventory items with quantity greater than the given value
+     * @param quantity el umbral de cantidad
+     * @return lista de registros de inventario con cantidad mayor al valor dado
      */
     List<Inventory> findInventoryItemsByQuantityGreaterThan(Integer quantity);
     
     /**
-     * Find inventory items with quantity between the given values.
+     * Busca registros de inventario con cantidad entre los valores especificados (inclusive).
      *
-     * @param minQuantity the minimum quantity
-     * @param maxQuantity the maximum quantity
-     * @return list of inventory items with quantity between the given values
+     * @param minQuantity la cantidad mínima
+     * @param maxQuantity la cantidad máxima
+     * @return lista de registros de inventario con cantidad dentro del rango especificado
      */
     List<Inventory> findInventoryItemsByQuantityBetween(Integer minQuantity, Integer maxQuantity);
     
     /**
-     * Find inventory items by product name.
+     * Busca registros de inventario por nombre de producto.
      *
-     * @param productName the product name
-     * @return list of inventory items for products matching the given name
+     * @param productName el nombre del producto
+     * @return lista de registros de inventario para productos que coinciden con el nombre dado
      */
     List<Inventory> findInventoryItemsByProductName(String productName);
     
     /**
-     * Find inventory items by product category.
+     * Busca registros de inventario por categoría de producto.
      *
-     * @param categoryId the category ID
-     * @return list of inventory items for products in the specified category
+     * @param categoryId el ID de la categoría
+     * @return lista de registros de inventario para productos en la categoría especificada
      */
     List<Inventory> findInventoryItemsByProductCategory(Long categoryId);
     
     /**
-     * Find out-of-stock inventory items (quantity = 0).
+     * Busca registros de inventario sin stock (cantidad = 0).
      *
-     * @return list of out-of-stock inventory items
+     * @return lista de registros de inventario sin stock
      */
     List<Inventory> findOutOfStockItems();
     
     /**
-     * Create a new inventory item.
+     * Crea un nuevo registro de inventario.
      *
-     * @param inventory the inventory item to create
-     * @return the created inventory item
-     * @throws com.example.dataservice.exception.ValidationException if the inventory data is invalid
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the referenced product is not found
+     * @param inventory el registro de inventario a crear
+     * @return el registro de inventario creado
+     * @throws com.example.dataservice.exception.ValidationException si los datos del inventario son inválidos
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si el producto referenciado no se encuentra
      */
     Inventory createInventoryItem(Inventory inventory);
     
     /**
-     * Update an existing inventory item.
+     * Actualiza un registro de inventario existente.
      *
-     * @param id the inventory item ID
-     * @param inventoryDetails the updated inventory data
-     * @return the updated inventory item
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the inventory item is not found
-     * @throws com.example.dataservice.exception.ValidationException if the inventory data is invalid
+     * @param id el ID del registro de inventario
+     * @param inventoryDetails los datos actualizados del inventario
+     * @return el registro de inventario actualizado
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si el registro de inventario no se encuentra
+     * @throws com.example.dataservice.exception.ValidationException si los datos del inventario son inválidos
      */
     Inventory updateInventoryItem(Long id, Inventory inventoryDetails);
     
     /**
-     * Update the quantity of an inventory item.
+     * Actualiza la cantidad de un registro de inventario.
      *
-     * @param id the inventory item ID
-     * @param quantity the new quantity
-     * @return the updated inventory item
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the inventory item is not found
-     * @throws com.example.dataservice.exception.ValidationException if the quantity is invalid
+     * @param id el ID del registro de inventario
+     * @param quantity la nueva cantidad
+     * @return el registro de inventario actualizado
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si el registro de inventario no se encuentra
+     * @throws com.example.dataservice.exception.ValidationException si la cantidad es inválida
      */
     Inventory updateInventoryQuantity(Long id, Integer quantity);
     
     /**
-     * Delete an inventory item by its ID.
+     * Elimina un registro de inventario por su ID.
      *
-     * @param id the inventory item ID
-     * @throws com.example.dataservice.exception.ResourceNotFoundException if the inventory item is not found
+     * @param id el ID del registro de inventario
+     * @throws com.example.dataservice.exception.ResourceNotFoundException si el registro de inventario no se encuentra
      */
     void deleteInventoryItem(Long id);
     
     /**
-     * Check if an inventory item exists with the given ID.
+     * Verifica si existe un registro de inventario con el ID especificado.
      *
-     * @param id the inventory item ID
-     * @return true if the inventory item exists
+     * @param id el ID del registro de inventario
+     * @return true si el registro de inventario existe
      */
     boolean existsById(Long id);
 }
