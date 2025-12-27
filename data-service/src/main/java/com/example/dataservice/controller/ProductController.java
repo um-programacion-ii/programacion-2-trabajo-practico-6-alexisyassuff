@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * REST controller for managing products.
+ * Controlador REST para la gestión de productos.
  */
 @RestController
 @RequestMapping("/data/products")
@@ -20,15 +20,22 @@ public class ProductController {
 
     private final ProductService productService;
 
+    /**
+     * Constructor con inyección de dependencias.
+     *
+     * @param productService servicio de productos
+     */
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
+    // ==================== Métodos GET ====================
+
     /**
-     * GET /data/products : Get all products.
+     * GET /data/products : Obtiene todos los productos.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of products in the body
+     * @return ResponseEntity con estado 200 (OK) y la lista de productos en el cuerpo
      */
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
@@ -37,11 +44,11 @@ public class ProductController {
     }
 
     /**
-     * GET /data/products/{id} : Get the product with the specified ID.
+     * GET /data/products/{id} : Obtiene un producto por su ID.
      *
-     * @param id the ID of the product to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the product in the body,
-     *         or with status 404 (Not Found) if the product is not found
+     * @param id el ID del producto a obtener
+     * @return ResponseEntity con estado 200 (OK) y el producto en el cuerpo,
+     *         o con estado 404 (Not Found) si el producto no se encuentra
      */
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
@@ -50,10 +57,10 @@ public class ProductController {
     }
 
     /**
-     * GET /data/products/search : Search products by name.
+     * GET /data/products/search : Busca productos por nombre.
      *
-     * @param name the name pattern to search for
-     * @return the ResponseEntity with status 200 (OK) and the list of matching products in the body
+     * @param name el patrón de nombre a buscar
+     * @return ResponseEntity con estado 200 (OK) y la lista de productos que coinciden en el cuerpo
      */
     @GetMapping("/search")
     public ResponseEntity<List<Product>> searchProductsByName(@RequestParam String name) {
@@ -62,11 +69,11 @@ public class ProductController {
     }
 
     /**
-     * GET /data/products/category/{categoryId} : Get products by category ID.
+     * GET /data/products/category/{categoryId} : Obtiene productos por ID de categoría.
      *
-     * @param categoryId the category ID
-     * @return the ResponseEntity with status 200 (OK) and the list of products in the specified category in the body,
-     *         or with status 404 (Not Found) if the category is not found
+     * @param categoryId el ID de la categoría
+     * @return ResponseEntity con estado 200 (OK) y la lista de productos en la categoría especificada en el cuerpo,
+     *         o con estado 404 (Not Found) si la categoría no se encuentra
      */
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<Product>> getProductsByCategoryId(@PathVariable Long categoryId) {
@@ -75,10 +82,10 @@ public class ProductController {
     }
 
     /**
-     * GET /data/products/category/name/{categoryName} : Get products by category name.
+     * GET /data/products/category/name/{categoryName} : Obtiene productos por nombre de categoría.
      *
-     * @param categoryName the category name
-     * @return the ResponseEntity with status 200 (OK) and the list of products in the specified category in the body
+     * @param categoryName el nombre de la categoría
+     * @return ResponseEntity con estado 200 (OK) y la lista de productos en la categoría especificada en el cuerpo
      */
     @GetMapping("/category/name/{categoryName}")
     public ResponseEntity<List<Product>> getProductsByCategoryName(@PathVariable String categoryName) {
@@ -87,10 +94,10 @@ public class ProductController {
     }
 
     /**
-     * GET /data/products/price/max/{maxPrice} : Get products with price less than or equal to the given value.
+     * GET /data/products/price/max/{maxPrice} : Obtiene productos con precio menor o igual al valor especificado.
      *
-     * @param maxPrice the maximum price
-     * @return the ResponseEntity with status 200 (OK) and the list of products with price less than or equal to the given value in the body
+     * @param maxPrice el precio máximo
+     * @return ResponseEntity con estado 200 (OK) y la lista de productos con precio menor o igual al valor dado en el cuerpo
      */
     @GetMapping("/price/max/{maxPrice}")
     public ResponseEntity<List<Product>> getProductsByMaxPrice(@PathVariable BigDecimal maxPrice) {
@@ -99,10 +106,10 @@ public class ProductController {
     }
 
     /**
-     * GET /data/products/price/min/{minPrice} : Get products with price greater than or equal to the given value.
+     * GET /data/products/price/min/{minPrice} : Obtiene productos con precio mayor o igual al valor especificado.
      *
-     * @param minPrice the minimum price
-     * @return the ResponseEntity with status 200 (OK) and the list of products with price greater than or equal to the given value in the body
+     * @param minPrice el precio mínimo
+     * @return ResponseEntity con estado 200 (OK) y la lista de productos con precio mayor o igual al valor dado en el cuerpo
      */
     @GetMapping("/price/min/{minPrice}")
     public ResponseEntity<List<Product>> getProductsByMinPrice(@PathVariable BigDecimal minPrice) {
@@ -111,11 +118,11 @@ public class ProductController {
     }
 
     /**
-     * GET /data/products/price/range : Get products with price between the given values.
+     * GET /data/products/price/range : Obtiene productos con precio entre los valores especificados.
      *
-     * @param minPrice the minimum price
-     * @param maxPrice the maximum price
-     * @return the ResponseEntity with status 200 (OK) and the list of products with price between the given values in the body
+     * @param minPrice el precio mínimo
+     * @param maxPrice el precio máximo
+     * @return ResponseEntity con estado 200 (OK) y la lista de productos con precio dentro del rango especificado en el cuerpo
      */
     @GetMapping("/price/range")
     public ResponseEntity<List<Product>> getProductsByPriceRange(
@@ -124,13 +131,15 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    // ==================== Métodos POST ====================
+
     /**
-     * POST /data/products : Create a new product.
+     * POST /data/products : Crea un nuevo producto.
      *
-     * @param product the product to create
-     * @return the ResponseEntity with status 201 (Created) and the new product in the body,
-     *         or with status 400 (Bad Request) if the product data is invalid,
-     *         or with status 404 (Not Found) if the referenced category is not found
+     * @param product el producto a crear
+     * @return ResponseEntity con estado 201 (Created) y el nuevo producto en el cuerpo,
+     *         o con estado 400 (Bad Request) si los datos del producto son inválidos,
+     *         o con estado 404 (Not Found) si la categoría referenciada no se encuentra
      */
     @PostMapping
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
@@ -138,14 +147,16 @@ public class ProductController {
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     }
 
+    // ==================== Métodos PUT ====================
+
     /**
-     * PUT /data/products/{id} : Update an existing product.
+     * PUT /data/products/{id} : Actualiza un producto existente.
      *
-     * @param id the ID of the product to update
-     * @param product the updated product data
-     * @return the ResponseEntity with status 200 (OK) and the updated product in the body,
-     *         or with status 400 (Bad Request) if the product data is invalid,
-     *         or with status 404 (Not Found) if the product or referenced category is not found
+     * @param id el ID del producto a actualizar
+     * @param product los datos actualizados del producto
+     * @return ResponseEntity con estado 200 (OK) y el producto actualizado en el cuerpo,
+     *         o con estado 400 (Bad Request) si los datos del producto son inválidos,
+     *         o con estado 404 (Not Found) si el producto o la categoría referenciada no se encuentran
      */
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Valid @RequestBody Product product) {
@@ -154,25 +165,12 @@ public class ProductController {
     }
 
     /**
-     * DELETE /data/products/{id} : Delete a product.
+     * PUT /data/products/{productId}/category/{categoryId} : Asigna una categoría a un producto.
      *
-     * @param id the ID of the product to delete
-     * @return the ResponseEntity with status 204 (No Content),
-     *         or with status 404 (Not Found) if the product is not found
-     */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    /**
-     * PUT /data/products/{productId}/category/{categoryId} : Assign a category to a product.
-     *
-     * @param productId the product ID
-     * @param categoryId the category ID
-     * @return the ResponseEntity with status 200 (OK) and the updated product in the body,
-     *         or with status 404 (Not Found) if the product or category is not found
+     * @param productId el ID del producto
+     * @param categoryId el ID de la categoría
+     * @return ResponseEntity con estado 200 (OK) y el producto actualizado en el cuerpo,
+     *         o con estado 404 (Not Found) si el producto o la categoría no se encuentran
      */
     @PutMapping("/{productId}/category/{categoryId}")
     public ResponseEntity<Product> assignCategoryToProduct(
@@ -181,12 +179,27 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    // ==================== Métodos DELETE ====================
+
     /**
-     * DELETE /data/products/{productId}/category : Remove the category from a product.
+     * DELETE /data/products/{id} : Elimina un producto.
      *
-     * @param productId the product ID
-     * @return the ResponseEntity with status 200 (OK) and the updated product in the body,
-     *         or with status 404 (Not Found) if the product is not found
+     * @param id el ID del producto a eliminar
+     * @return ResponseEntity con estado 204 (No Content),
+     *         o con estado 404 (Not Found) si el producto no se encuentra
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    /**
+     * DELETE /data/products/{productId}/category : Remueve la categoría de un producto.
+     *
+     * @param productId el ID del producto
+     * @return ResponseEntity con estado 200 (OK) y el producto actualizado en el cuerpo,
+     *         o con estado 404 (Not Found) si el producto no se encuentra
      */
     @DeleteMapping("/{productId}/category")
     public ResponseEntity<Product> removeCategoryFromProduct(@PathVariable Long productId) {

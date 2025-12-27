@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * REST controller for managing inventory items.
+ * Controlador REST para la gestión de registros de inventario.
  */
 @RestController
 @RequestMapping("/data/inventory")
@@ -19,15 +19,22 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
+    /**
+     * Constructor con inyección de dependencias.
+     *
+     * @param inventoryService servicio de inventario
+     */
     @Autowired
     public InventoryController(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
     }
 
+    // ==================== Métodos GET ====================
+
     /**
-     * GET /data/inventory : Get all inventory items.
+     * GET /data/inventory : Obtiene todos los registros de inventario.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of inventory items in the body
+     * @return ResponseEntity con estado 200 (OK) y la lista de registros de inventario en el cuerpo
      */
     @GetMapping
     public ResponseEntity<List<Inventory>> getAllInventoryItems() {
@@ -36,11 +43,11 @@ public class InventoryController {
     }
 
     /**
-     * GET /data/inventory/{id} : Get the inventory item with the specified ID.
+     * GET /data/inventory/{id} : Obtiene un registro de inventario por su ID.
      *
-     * @param id the ID of the inventory item to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the inventory item in the body,
-     *         or with status 404 (Not Found) if the inventory item is not found
+     * @param id el ID del registro de inventario a obtener
+     * @return ResponseEntity con estado 200 (OK) y el registro de inventario en el cuerpo,
+     *         o con estado 404 (Not Found) si el registro de inventario no se encuentra
      */
     @GetMapping("/{id}")
     public ResponseEntity<Inventory> getInventoryItemById(@PathVariable Long id) {
@@ -49,11 +56,11 @@ public class InventoryController {
     }
 
     /**
-     * GET /data/inventory/product/{productId} : Get inventory items by product ID.
+     * GET /data/inventory/product/{productId} : Obtiene registros de inventario por ID de producto.
      *
-     * @param productId the product ID
-     * @return the ResponseEntity with status 200 (OK) and the list of inventory items for the specified product in the body,
-     *         or with status 404 (Not Found) if the product is not found
+     * @param productId el ID del producto
+     * @return ResponseEntity con estado 200 (OK) y la lista de registros de inventario para el producto especificado en el cuerpo,
+     *         o con estado 404 (Not Found) si el producto no se encuentra
      */
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<Inventory>> getInventoryItemsByProductId(@PathVariable Long productId) {
@@ -62,10 +69,10 @@ public class InventoryController {
     }
 
     /**
-     * GET /data/inventory/location/{location} : Get inventory items by location.
+     * GET /data/inventory/location/{location} : Obtiene registros de inventario por ubicación.
      *
-     * @param location the location
-     * @return the ResponseEntity with status 200 (OK) and the list of inventory items at the specified location in the body
+     * @param location la ubicación
+     * @return ResponseEntity con estado 200 (OK) y la lista de registros de inventario en la ubicación especificada en el cuerpo
      */
     @GetMapping("/location/{location}")
     public ResponseEntity<List<Inventory>> getInventoryItemsByLocation(@PathVariable String location) {
@@ -74,10 +81,10 @@ public class InventoryController {
     }
 
     /**
-     * GET /data/inventory/quantity/less/{quantity} : Get inventory items with quantity less than the given value.
+     * GET /data/inventory/quantity/less/{quantity} : Obtiene registros de inventario con cantidad menor al valor especificado.
      *
-     * @param quantity the quantity threshold
-     * @return the ResponseEntity with status 200 (OK) and the list of inventory items with quantity less than the given value in the body
+     * @param quantity el umbral de cantidad
+     * @return ResponseEntity con estado 200 (OK) y la lista de registros de inventario con cantidad menor al valor dado en el cuerpo
      */
     @GetMapping("/quantity/less/{quantity}")
     public ResponseEntity<List<Inventory>> getInventoryItemsByQuantityLessThan(@PathVariable Integer quantity) {
@@ -86,10 +93,10 @@ public class InventoryController {
     }
 
     /**
-     * GET /data/inventory/quantity/greater/{quantity} : Get inventory items with quantity greater than the given value.
+     * GET /data/inventory/quantity/greater/{quantity} : Obtiene registros de inventario con cantidad mayor al valor especificado.
      *
-     * @param quantity the quantity threshold
-     * @return the ResponseEntity with status 200 (OK) and the list of inventory items with quantity greater than the given value in the body
+     * @param quantity el umbral de cantidad
+     * @return ResponseEntity con estado 200 (OK) y la lista de registros de inventario con cantidad mayor al valor dado en el cuerpo
      */
     @GetMapping("/quantity/greater/{quantity}")
     public ResponseEntity<List<Inventory>> getInventoryItemsByQuantityGreaterThan(@PathVariable Integer quantity) {
@@ -98,11 +105,11 @@ public class InventoryController {
     }
 
     /**
-     * GET /data/inventory/quantity/range : Get inventory items with quantity between the given values.
+     * GET /data/inventory/quantity/range : Obtiene registros de inventario con cantidad entre los valores especificados.
      *
-     * @param minQuantity the minimum quantity
-     * @param maxQuantity the maximum quantity
-     * @return the ResponseEntity with status 200 (OK) and the list of inventory items with quantity between the given values in the body
+     * @param minQuantity la cantidad mínima
+     * @param maxQuantity la cantidad máxima
+     * @return ResponseEntity con estado 200 (OK) y la lista de registros de inventario con cantidad dentro del rango especificado en el cuerpo
      */
     @GetMapping("/quantity/range")
     public ResponseEntity<List<Inventory>> getInventoryItemsByQuantityBetween(
@@ -112,10 +119,10 @@ public class InventoryController {
     }
 
     /**
-     * GET /data/inventory/product/name/{productName} : Get inventory items by product name.
+     * GET /data/inventory/product/name/{productName} : Obtiene registros de inventario por nombre de producto.
      *
-     * @param productName the product name
-     * @return the ResponseEntity with status 200 (OK) and the list of inventory items for products matching the given name in the body
+     * @param productName el nombre del producto
+     * @return ResponseEntity con estado 200 (OK) y la lista de registros de inventario para productos que coinciden con el nombre dado en el cuerpo
      */
     @GetMapping("/product/name/{productName}")
     public ResponseEntity<List<Inventory>> getInventoryItemsByProductName(@PathVariable String productName) {
@@ -124,10 +131,10 @@ public class InventoryController {
     }
 
     /**
-     * GET /data/inventory/category/{categoryId} : Get inventory items by product category.
+     * GET /data/inventory/category/{categoryId} : Obtiene registros de inventario por categoría de producto.
      *
-     * @param categoryId the category ID
-     * @return the ResponseEntity with status 200 (OK) and the list of inventory items for products in the specified category in the body
+     * @param categoryId el ID de la categoría
+     * @return ResponseEntity con estado 200 (OK) y la lista de registros de inventario para productos en la categoría especificada en el cuerpo
      */
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<Inventory>> getInventoryItemsByProductCategory(@PathVariable Long categoryId) {
@@ -136,9 +143,9 @@ public class InventoryController {
     }
 
     /**
-     * GET /data/inventory/out-of-stock : Get out-of-stock inventory items.
+     * GET /data/inventory/out-of-stock : Obtiene registros de inventario sin stock (cantidad = 0).
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of out-of-stock inventory items in the body
+     * @return ResponseEntity con estado 200 (OK) y la lista de registros de inventario sin stock en el cuerpo
      */
     @GetMapping("/out-of-stock")
     public ResponseEntity<List<Inventory>> getOutOfStockItems() {
@@ -146,13 +153,15 @@ public class InventoryController {
         return new ResponseEntity<>(inventoryItems, HttpStatus.OK);
     }
 
+    // ==================== Métodos POST ====================
+
     /**
-     * POST /data/inventory : Create a new inventory item.
+     * POST /data/inventory : Crea un nuevo registro de inventario.
      *
-     * @param inventory the inventory item to create
-     * @return the ResponseEntity with status 201 (Created) and the new inventory item in the body,
-     *         or with status 400 (Bad Request) if the inventory data is invalid,
-     *         or with status 404 (Not Found) if the referenced product is not found
+     * @param inventory el registro de inventario a crear
+     * @return ResponseEntity con estado 201 (Created) y el nuevo registro de inventario en el cuerpo,
+     *         o con estado 400 (Bad Request) si los datos del inventario son inválidos,
+     *         o con estado 404 (Not Found) si el producto referenciado no se encuentra
      */
     @PostMapping
     public ResponseEntity<Inventory> createInventoryItem(@Valid @RequestBody Inventory inventory) {
@@ -160,14 +169,16 @@ public class InventoryController {
         return new ResponseEntity<>(newInventory, HttpStatus.CREATED);
     }
 
+    // ==================== Métodos PUT/PATCH ====================
+
     /**
-     * PUT /data/inventory/{id} : Update an existing inventory item.
+     * PUT /data/inventory/{id} : Actualiza un registro de inventario existente.
      *
-     * @param id the ID of the inventory item to update
-     * @param inventory the updated inventory data
-     * @return the ResponseEntity with status 200 (OK) and the updated inventory item in the body,
-     *         or with status 400 (Bad Request) if the inventory data is invalid,
-     *         or with status 404 (Not Found) if the inventory item or referenced product is not found
+     * @param id el ID del registro de inventario a actualizar
+     * @param inventory los datos actualizados del inventario
+     * @return ResponseEntity con estado 200 (OK) y el registro de inventario actualizado en el cuerpo,
+     *         o con estado 400 (Bad Request) si los datos del inventario son inválidos,
+     *         o con estado 404 (Not Found) si el registro de inventario o el producto referenciado no se encuentran
      */
     @PutMapping("/{id}")
     public ResponseEntity<Inventory> updateInventoryItem(@PathVariable Long id, @Valid @RequestBody Inventory inventory) {
@@ -176,13 +187,13 @@ public class InventoryController {
     }
 
     /**
-     * PATCH /data/inventory/{id}/quantity/{quantity} : Update the quantity of an inventory item.
+     * PATCH /data/inventory/{id}/quantity/{quantity} : Actualiza la cantidad de un registro de inventario.
      *
-     * @param id the ID of the inventory item to update
-     * @param quantity the new quantity
-     * @return the ResponseEntity with status 200 (OK) and the updated inventory item in the body,
-     *         or with status 400 (Bad Request) if the quantity is invalid,
-     *         or with status 404 (Not Found) if the inventory item is not found
+     * @param id el ID del registro de inventario a actualizar
+     * @param quantity la nueva cantidad
+     * @return ResponseEntity con estado 200 (OK) y el registro de inventario actualizado en el cuerpo,
+     *         o con estado 400 (Bad Request) si la cantidad es inválida,
+     *         o con estado 404 (Not Found) si el registro de inventario no se encuentra
      */
     @PatchMapping("/{id}/quantity/{quantity}")
     public ResponseEntity<Inventory> updateInventoryQuantity(@PathVariable Long id, @PathVariable Integer quantity) {
@@ -190,12 +201,14 @@ public class InventoryController {
         return new ResponseEntity<>(updatedInventory, HttpStatus.OK);
     }
 
+    // ==================== Métodos DELETE ====================
+
     /**
-     * DELETE /data/inventory/{id} : Delete an inventory item.
+     * DELETE /data/inventory/{id} : Elimina un registro de inventario.
      *
-     * @param id the ID of the inventory item to delete
-     * @return the ResponseEntity with status 204 (No Content),
-     *         or with status 404 (Not Found) if the inventory item is not found
+     * @param id el ID del registro de inventario a eliminar
+     * @return ResponseEntity con estado 204 (No Content),
+     *         o con estado 404 (Not Found) si el registro de inventario no se encuentra
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteInventoryItem(@PathVariable Long id) {
