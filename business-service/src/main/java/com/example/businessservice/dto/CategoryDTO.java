@@ -3,7 +3,8 @@ package com.example.businessservice.dto;
 import jakarta.validation.constraints.NotBlank;
 
 /**
- * Data Transfer Object for Category entity.
+ * Objeto de transferencia de datos (DTO) para la entidad Category.
+ * Se utiliza para transferir datos de categorías entre el servicio de negocio y el servicio de datos.
  */
 public class CategoryDTO {
 
@@ -14,18 +15,27 @@ public class CategoryDTO {
 
     private String description;
 
-    // Default constructor
+    /**
+     * Constructor por defecto sin argumentos.
+     */
     public CategoryDTO() {
     }
 
-    // Constructor with fields
+    /**
+     * Constructor con todos los campos de la categoría.
+     *
+     * @param id el ID de la categoría
+     * @param name el nombre de la categoría
+     * @param description la descripción de la categoría
+     */
     public CategoryDTO(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
 
-    // Getters and Setters
+    // ==================== Getters y Setters ====================
+
     public Long getId() {
         return id;
     }
@@ -49,6 +59,8 @@ public class CategoryDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    // ==================== Métodos heredados ====================
 
     @Override
     public String toString() {

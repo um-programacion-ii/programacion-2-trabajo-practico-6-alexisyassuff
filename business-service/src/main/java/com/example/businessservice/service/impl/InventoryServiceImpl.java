@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Implementation of the InventoryService interface.
- * Uses Feign client to communicate with the data service.
+ * Implementación de la interfaz InventoryService.
+ * Utiliza el cliente Feign para comunicarse con el servicio de datos.
  */
 @Service
 public class InventoryServiceImpl implements InventoryService {
@@ -34,6 +34,11 @@ public class InventoryServiceImpl implements InventoryService {
 
     private final InventoryClient inventoryClient;
 
+    /**
+     * Constructor con inyección de dependencias.
+     *
+     * @param inventoryClient cliente Feign para inventario
+     */
     @Autowired
     public InventoryServiceImpl(InventoryClient inventoryClient) {
         this.inventoryClient = inventoryClient;
@@ -369,8 +374,14 @@ public class InventoryServiceImpl implements InventoryService {
         }
     }
 
-    // Helper methods for conversion between data service objects and DTOs
+    // ==================== Métodos Privados de Conversión ====================
 
+    /**
+     * Convierte un objeto del servicio de datos a un InventoryDTO.
+     *
+     * @param inventoryData el objeto de datos del inventario
+     * @return el InventoryDTO convertido
+     */
     private InventoryDTO convertToInventoryDTO(Object inventoryData) {
         if (inventoryData == null) {
             return null;
@@ -454,6 +465,12 @@ public class InventoryServiceImpl implements InventoryService {
         }
     }
 
+    /**
+     * Convierte un objeto del servicio de datos a un ProductDTO.
+     *
+     * @param productData el objeto de datos del producto
+     * @return el ProductDTO convertido
+     */
     private ProductDTO convertToProductDTO(Object productData) {
         if (productData == null) {
             return null;
@@ -503,6 +520,12 @@ public class InventoryServiceImpl implements InventoryService {
         }
     }
 
+    /**
+     * Convierte un objeto del servicio de datos a un CategoryDTO.
+     *
+     * @param categoryData el objeto de datos de la categoría
+     * @return el CategoryDTO convertido
+     */
     private CategoryDTO convertToCategoryDTO(Object categoryData) {
         if (categoryData == null) {
             return null;
@@ -534,6 +557,12 @@ public class InventoryServiceImpl implements InventoryService {
         }
     }
 
+    /**
+     * Convierte una lista de objetos del servicio de datos a una lista de InventoryDTO.
+     *
+     * @param inventoryDataList la lista de objetos de datos de inventario
+     * @return la lista de InventoryDTO convertida
+     */
     private List<InventoryDTO> convertToInventoryDTOList(List<Object> inventoryDataList) {
         if (inventoryDataList == null) {
             return Collections.emptyList();
@@ -549,6 +578,12 @@ public class InventoryServiceImpl implements InventoryService {
         return result;
     }
 
+    /**
+     * Convierte un InventoryDTO a un objeto compatible para enviar al servicio de datos.
+     *
+     * @param inventoryDTO el InventoryDTO a convertir
+     * @return el objeto compatible para enviar al servicio de datos
+     */
     private Object convertFromInventoryDTO(InventoryDTO inventoryDTO) {
         if (inventoryDTO == null) {
             return null;

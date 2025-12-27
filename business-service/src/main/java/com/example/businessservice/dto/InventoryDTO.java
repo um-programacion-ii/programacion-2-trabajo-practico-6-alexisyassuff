@@ -4,7 +4,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * Data Transfer Object for Inventory entity.
+ * Objeto de transferencia de datos (DTO) para la entidad Inventory.
+ * Se utiliza para transferir datos de inventario entre el servicio de negocio y el servicio de datos.
  */
 public class InventoryDTO {
 
@@ -20,11 +21,20 @@ public class InventoryDTO {
     @NotNull(message = "Location is required")
     private String location;
 
-    // Default constructor
+    /**
+     * Constructor por defecto sin argumentos.
+     */
     public InventoryDTO() {
     }
 
-    // Constructor with fields
+    /**
+     * Constructor con todos los campos del inventario.
+     *
+     * @param id el ID del registro de inventario
+     * @param product el producto asociado
+     * @param quantity la cantidad en stock
+     * @param location la ubicación del inventario
+     */
     public InventoryDTO(Long id, ProductDTO product, Integer quantity, String location) {
         this.id = id;
         this.product = product;
@@ -32,7 +42,8 @@ public class InventoryDTO {
         this.location = location;
     }
 
-    // Getters and Setters
+    // ==================== Getters y Setters ====================
+
     public Long getId() {
         return id;
     }
@@ -64,6 +75,8 @@ public class InventoryDTO {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    // ==================== Métodos heredados ====================
 
     @Override
     public String toString() {
