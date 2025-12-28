@@ -1,7 +1,19 @@
-version: '3.8'
+version: "3.8"
+
+# ============================================================================
+# Configuración de Docker Compose para el sistema de microservicios
+# ============================================================================
+# Este archivo define los servicios necesarios para ejecutar el sistema:
+# - Bases de datos: MySQL y PostgreSQL
+# - Microservicios: data-service y business-service
+# ============================================================================
 
 services:
-  # MySQL Database
+  # --------------------------------------------------------------------------
+  # Base de Datos: MySQL 8.4
+  # --------------------------------------------------------------------------
+  # Servicio MySQL utilizado para persistencia con perfil 'mysql'
+  # --------------------------------------------------------------------------
   mysql:
     image: mysql:8.4
     container_name: microservices_mysql
@@ -21,7 +33,11 @@ services:
       timeout: 20s
       retries: 10
 
-  # PostgreSQL Database
+  # --------------------------------------------------------------------------
+  # Base de Datos: PostgreSQL 16
+  # --------------------------------------------------------------------------
+  # Servicio PostgreSQL utilizado para persistencia con perfil 'postgres'
+  # --------------------------------------------------------------------------
   postgres:
     image: postgres:16
     container_name: microservices_postgres
@@ -40,7 +56,12 @@ services:
       timeout: 20s
       retries: 10
 
-  # Data Service
+  # --------------------------------------------------------------------------
+  # Microservicio: Data Service
+  # --------------------------------------------------------------------------
+  # Servicio encargado de la persistencia de datos (Productos, Categorías, Inventario)
+  # Expone el puerto 8081 y depende de las bases de datos estando saludables
+  # --------------------------------------------------------------------------
   data-service:
     build:
       context: .
@@ -58,7 +79,12 @@ services:
     networks:
       - microservices_network
 
-  # Business Service
+  # --------------------------------------------------------------------------
+  # Microservicio: Business Service
+  # --------------------------------------------------------------------------
+  # Servicio encargado de la lógica de negocio y orquestación
+  # Expone el puerto 8082 y depende de data-service para funcionar
+  # --------------------------------------------------------------------------
   business-service:
     build:
       context: .
@@ -74,10 +100,18 @@ services:
     networks:
       - microservices_network
 
+# --------------------------------------------------------------------------
+# Redes Docker
+# --------------------------------------------------------------------------
 networks:
   microservices_network:
     driver: bridge
 
+# --------------------------------------------------------------------------
+# Volúmenes Persistentes
+# --------------------------------------------------------------------------
+# Volúmenes para mantener la persistencia de datos entre reinicios
+# --------------------------------------------------------------------------
 volumes:
   mysql_data:
   postgres_data:
