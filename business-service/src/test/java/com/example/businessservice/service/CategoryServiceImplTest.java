@@ -19,6 +19,12 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Tests unitarios para CategoryServiceImpl.
+ * 
+ * Prueba la lógica de negocio del servicio de categorías utilizando mocks
+ * del CategoryClient para simular las respuestas del data-service.
+ */
 public class CategoryServiceImplTest {
 
     @Mock
@@ -32,6 +38,15 @@ public class CategoryServiceImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    // --------------------------------------------------------------------------
+    // Tests de obtención de categorías
+    // --------------------------------------------------------------------------
+
+    /**
+     * Test para obtener todas las categorías.
+     * Verifica que el servicio mapee correctamente una lista de categorías
+     * recibida desde el data-service.
+     */
     @Test
     void getAllCategories_shouldMapResponseList() {
         // Arrange
@@ -53,6 +68,11 @@ public class CategoryServiceImplTest {
         assertEquals("Electronics", result.get(0).getName());
     }
 
+    /**
+     * Test para obtener una categoría por ID.
+     * Verifica que el servicio mapee correctamente una categoría individual
+     * recibida desde el data-service.
+     */
     @Test
     void getCategoryById_shouldMapSingleObject() {
         // Arrange

@@ -21,6 +21,12 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Tests unitarios para ProductServiceImpl.
+ * 
+ * Prueba la lógica de negocio del servicio de productos utilizando mocks
+ * del ProductClient para simular las respuestas del data-service.
+ */
 public class ProductServiceImplTest {
 
     @Mock
@@ -34,9 +40,18 @@ public class ProductServiceImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    // --------------------------------------------------------------------------
+    // Tests de obtención de productos
+    // --------------------------------------------------------------------------
+
+    /**
+     * Test para obtener todos los productos.
+     * Verifica que el servicio mapee correctamente una lista de productos
+     * recibida desde el data-service.
+     */
     @Test
     void getAllProducts_shouldMapListFromDataService() {
-        // Arrange: simulate data-service sending list of maps
+        // Arrange: simular respuesta del data-service con lista de maps
         List<Object> body = new ArrayList<>();
         Map<String, Object> p = new HashMap<>();
         p.put("id", 10L);
@@ -66,6 +81,11 @@ public class ProductServiceImplTest {
         assertEquals("Electronics", dto.getCategory().getName());
     }
 
+    /**
+     * Test para obtener un producto por ID.
+     * Verifica que el servicio mapee correctamente un producto individual
+     * recibido desde el data-service.
+     */
     @Test
     void getProductById_shouldMapSingleObject() {
         // Arrange
@@ -87,12 +107,21 @@ public class ProductServiceImplTest {
         assertEquals(new BigDecimal("39.99"), dto.getPrice());
     }
 
+    // --------------------------------------------------------------------------
+    // Tests de creación de productos
+    // --------------------------------------------------------------------------
+
+    /**
+     * Test para crear un producto.
+     * Verifica que el servicio mapee correctamente el DTO de respuesta
+     * después de crear un producto en el data-service.
+     */
     @Test
     void createProduct_shouldReturnMappedDTO() {
-        // Arrange: create request DTO
+        // Arrange: crear DTO de petición
         ProductDTO req = new ProductDTO(null, "Laptop", "Gaming", new BigDecimal("1299.99"), new CategoryDTO(1L, "Electronics", ""));
 
-        // Simulate data-service response
+        // Simular respuesta del data-service
         Map<String, Object> p = new HashMap<>();
         p.put("id", 99);
         p.put("name", "Laptop");
